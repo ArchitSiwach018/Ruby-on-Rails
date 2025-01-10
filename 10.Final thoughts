@@ -1,0 +1,6 @@
+
+This final code provides the full implementation of a role-based access control system using Devise for authentication and Pundit for authorization. It allows:
+
+Admins to manage users, stores, and ratings.
+Store Owners to manage their stores and view ratings submitted to their stores.
+Normal Users to submit and edit their ratings for stores.
