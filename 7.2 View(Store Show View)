@@ -1,0 +1,19 @@
+<!-- app/views/stores/show.html.erb -->
+<h1><%= @store.name %></h1>
+<p>Address: <%= @store.address %></p>
+<p>Owner: <%= @store.store_owner.name %></p>
+<p>Overall Rating: <%= @store.ratings.average(:rating).to_f %></p>
+
+<% if current_user.ratings.find_by(store: @store) %>
+  <%= link_to 'Edit Rating', edit_store_rating_path(@store, current_user.ratings.find_by(store: @store)) %>
+<% else %>
+  <%= form_with(model: [@store, Rating.new], local: true) do |form| %>
+    <%= form.label :rating %>
+    <%= form.number_field :rating, in: 1..5 %>
+    <%= form.submit 'Submit Rating' %>
+  <% end %>
+<% end %>
+
+<% if current_user == @store.store_owner %>
+  <%= link_to 'Edit Store', edit_store_path(@store) %>
+<% end %>
