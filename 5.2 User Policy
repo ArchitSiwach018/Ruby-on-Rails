@@ -1,0 +1,18 @@
+# app/policies/user_policy.rb
+class UserPolicy < ApplicationPolicy
+  def index?
+    admin?
+  end
+
+  def create?
+    admin?
+  end
+
+  def update?
+    admin? || (user == record)
+  end
+
+  def destroy?
+    admin?
+  end
+end
