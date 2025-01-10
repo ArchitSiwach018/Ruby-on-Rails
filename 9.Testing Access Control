@@ -1,0 +1,20 @@
+# test/controllers/stores_controller_test.rb
+class StoresControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    @admin = users(:admin)
+    @store_owner = users(:store_owner)
+    @store = stores(:one)
+    sign_in @admin
+  end
+
+  test "admin should access store index" do
+    get stores_path
+    assert_response :success
+  end
+
+  test "store owner should not access store index" do
+    sign_in @store_owner
+    get stores_path
+    assert_redirected_to root_path
+  end
+end
