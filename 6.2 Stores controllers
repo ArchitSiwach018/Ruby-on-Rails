@@ -1,0 +1,33 @@
+# app/controllers/stores_controller.rb
+class StoresController < ApplicationController
+  before_action :authenticate_user!
+  
+  def index
+    @stores = if current_user.admin? || current_user.normal_user?
+                Store.all
+              else
+                redirect_to root_path, alert: "You are not authorized to view stores."
+              end
+  end
+
+  def show
+    @store = Store.find(params[:id])
+    authorize @store
+  end
+
+  def create
+    @store = Store.new(store_params)
+    authorize @store
+    if @store.save
+      redirect_to @store, notice: 'Store was successfully created.'
+    else
+      render :new
+    end
+  end
+
+  private
+
+  def store_params
+    params.require(:store).permit(:name, :email, :address, :store_owner_id)
+  end
+end
