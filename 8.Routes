@@ -1,0 +1,12 @@
+# config/routes.rb
+devise_for :users
+
+namespace :admin do
+  resources :dashboard, only: [:index]
+end
+
+resources :stores do
+  resources :ratings, only: [:create, :update]
+end
+
+root to: 'stores#index'
