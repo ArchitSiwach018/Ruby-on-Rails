@@ -1,0 +1,14 @@
+# app/policies/rating_policy.rb
+class RatingPolicy < ApplicationPolicy
+  def create?
+    normal_user?
+  end
+
+  def update?
+    normal_user? && user == record.user
+  end
+
+  def destroy?
+    normal_user? && user == record.user
+  end
+end
