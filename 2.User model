@@ -1,0 +1,14 @@
+# app/models/user.rb
+class User < ApplicationRecord
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
+
+  enum role: { admin: 'admin', normal_user: 'normal_user', store_owner: 'store_owner' }
+
+  validates :name, length: { in: 20..60 }
+  validates :address, length: { maximum: 400 }
+  validates :role, inclusion: { in: %w(admin normal_user store_owner) }
+
+  # Associations
+  has_many :ratings
+  has_many :rated_stores, through: :ratings, source: :store
+end
