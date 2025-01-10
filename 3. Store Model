@@ -1,0 +1,11 @@
+# app/models/store.rb
+class Store < ApplicationRecord
+  belongs_to :store_owner, class_name: 'User'
+
+  has_many :ratings
+  has_many :rated_users, through: :ratings, source: :user
+
+  validates :name, presence: true
+  validates :address, presence: true
+  validates :email, presence: true
+end
