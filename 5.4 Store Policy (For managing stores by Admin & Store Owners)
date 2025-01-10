@@ -1,0 +1,22 @@
+# app/policies/store_policy.rb
+class StorePolicy < ApplicationPolicy
+  def index?
+    normal_user? || admin?
+  end
+
+  def show?
+    normal_user? || admin? || store_owner?
+  end
+
+  def create?
+    admin?
+  end
+
+  def update?
+    store_owner? && user == record.store_owner
+  end
+
+  def destroy?
+    admin?
+  end
+end
